@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniAttend — Attendance System</title>
+<meta name="theme-color" content="#1D4ED8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ======= LOGIN PAGE ======= -->
+<div id="loginPage" class="active" role="main">
+  <div class="login-bg-blob login-bg-blob-1" aria-hidden="true"></div>
+  <div class="login-bg-blob login-bg-blob-2" aria-hidden="true"></div>
+  <div class="login-bg-blob login-bg-blob-3" aria-hidden="true"></div>
+  <div class="login-split">
+    <div class="login-brand" aria-hidden="true">
+      <div class="brand-top">
+        <div class="brand-logo">
+          <div class="brand-logo-icon">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M8 2L14 5V11L8 14L2 11V5L8 2Z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 2V14" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M2 5L14 11" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".5"/><path d="M14 5L2 11" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".5"/></svg>
+          </div>
+          ORBYTE
+        </div>
+        <div class="brand-tagline">Smart Attendance<br>for <span>Modern Campuses</span></div>
+        <div class="brand-desc">Track lecturer attendance in real-time across all departments with smart insights and instant reporting.</div>
+      </div>
+      <div class="brand-features">
+        <div class="brand-feat"><div class="brand-feat-icon"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M7 4v3l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>Real-time check-in tracking</div>
+        <div class="brand-feat"><div class="brand-feat-icon"><svg viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="4" height="4" rx=".8" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="2" width="4" height="4" rx=".8" stroke="currentColor" stroke-width="1.3"/><rect x="2" y="8" width="4" height="4" rx=".8" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="8" width="4" height="4" rx=".8" stroke="currentColor" stroke-width="1.3"/></svg></div>Admin dashboard with KPIs</div>
+        <div class="brand-feat"><div class="brand-feat-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M4 2h5l3 3v7H4V2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M9 2v3h3" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 7.5h3M5.5 9.5h2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>CSV &amp; Excel export reports</div>
+        <div class="brand-feat"><div class="brand-feat-icon"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 12c0-2.21 2.239-4 5-4s5 1.79 5 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>Multi-role secure access</div>
+      </div>
+      <div class="brand-bottom">© 2025 Orbyte UniAttend · Demo System</div>
+    </div>
+    <div class="login-form-panel">
+      <div class="login-form-header">
+        <div class="login-form-title">Login to Attendance System</div>
+        <div class="login-form-sub">Sign in with your staff credentials to continue.</div>
+      </div>
+      <form id="loginForm" novalidate autocomplete="on">
+        <fieldset style="border:none;margin-bottom:28px;" aria-label="Select your role">
+          <legend style="font-size:13px;font-weight:500;color:var(--text-muted);margin-bottom:8px;">I am a</legend>
+          <div class="role-switcher" role="radiogroup" aria-label="Role selection">
+            <button type="button" class="role-btn active" id="roleLecturerBtn" aria-pressed="true" aria-label="Login as Lecturer">
+              <svg viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="4.5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 12.5c0-2.21 2.462-4 5.5-4s5.5 1.79 5.5 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              Lecturer
+            </button>
+            <button type="button" class="role-btn" id="roleAdminBtn" aria-pressed="false" aria-label="Login as Admin">
+              <svg viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5l1.2 3.6L12.5 5l-2.7 2.4.9 3.6-3.2-1.8L4.3 11l.9-3.6L2.5 5l3.8-.9L7.5 1.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+              Admin
+            </button>
+            <button type="button" class="role-btn role-student" id="roleStudentBtn" aria-pressed="false" aria-label="Login as Student">
+              <svg viewBox="0 0 15 15" fill="none"><path d="M7.5 1L14 4.5l-6.5 3L1 4.5 7.5 1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M1 4.5v5.5M14 4.5v5.5M7.5 8l-5 2.5v1.5l5 2.5 5-2.5v-1.5L7.5 8z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+              Student
+            </button>
+          </div>
+        </fieldset>
+        <div class="login-error" id="loginError" role="alert" aria-live="assertive">
+          <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.3"/><path d="M8 5v3.5M8 10.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span id="loginErrorMsg">Invalid credentials. Please try again.</span>
+        </div>
+        <div class="login-field">
+          <label for="loginId" id="loginIdLabel">Email</label>
+          <div class="login-input-wrap">
+            <span class="login-input-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 5l6 4 6-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+            <input type="email" id="loginId" name="username" class="login-input" autocomplete="email" placeholder="e.g. ahmad.hafiz@president.ac.id" aria-labelledby="loginIdLabel" aria-required="true" aria-describedby="loginIdHint">
+          </div>
+          <span id="loginIdHint" style="display:none"></span>
+        </div>
+        <div class="login-field">
+          <label for="loginPw">Password</label>
+          <div class="login-input-wrap">
+            <span class="login-input-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="4" y="7" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="10" r="1" fill="currentColor"/></svg></span>
+            <input type="password" id="loginPw" name="password" class="login-input" autocomplete="current-password" placeholder="Enter your password" aria-label="Password" aria-required="true">
+            <button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password" aria-pressed="false">
+              <svg id="eyeIcon" viewBox="0 0 16 16" fill="none"><ellipse cx="8" cy="8" rx="6" ry="4" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="1.5" stroke="currentColor" stroke-width="1.3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="login-meta">
+          <label class="remember-wrap"><input type="checkbox" id="rememberMe" aria-label="Remember me"><span>Remember me</span></label>
+          <button type="button" class="forgot-link" id="forgotBtn">Forgot password?</button>
+        </div>
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span class="btn-text">Sign In</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+        <div class="demo-hint" aria-label="Demo credentials hint">
+          <strong>Demo credentials —</strong>
+          <div class="demo-hint-row" style="margin-top:4px;"><span>Lecturer:</span><button type="button" class="demo-hint-fill" data-id="ahmad.hafiz@president.ac.id" data-email="ahmad.hafiz@president.ac.id" data-pw="ahmad123" data-role="lecturer">ahmad.hafiz@president.ac.id / ahmad123</button></div>
+          <div class="demo-hint-row"><span>Admin:</span><button type="button" class="demo-hint-fill" data-id="admin@president.ac.id" data-email="admin@president.ac.id" data-pw="admin123" data-role="admin">admin@president.ac.id / admin123</button></div>
+          <div class="demo-hint-row student-row"><span>Student:</span><button type="button" class="demo-hint-fill" data-id="aiman.danial@president.ac.id" data-email="aiman.danial@president.ac.id" data-pw="aiman123" data-role="student">aiman.danial@president.ac.id / aiman123</button></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Forgot Password Modal -->
+<div class="forgot-modal-backdrop" id="forgotBackdrop" role="dialog" aria-modal="true" aria-labelledby="forgotTitle">
+  <div class="forgot-modal">
+    <div class="forgot-modal-icon" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="var(--blue)" stroke-width="1.5"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="16" r="1.5" fill="var(--blue)"/></svg>
+    </div>
+    <h3 id="forgotTitle">Reset your password</h3>
+    <p>This is a demo system. In a real deployment, a reset link would be emailed to your registered address.<br><br>For now, please use the demo credentials shown on the login form.</p>
+    <div class="forgot-modal-actions">
+      <button class="forgot-modal-cancel" id="forgotCancel">Cancel</button>
+      <button class="forgot-modal-send" id="forgotOk">Got it</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======= SKELETON LOADER ======= -->
+<div class="skeleton-overlay" id="skeletonOverlay" role="status" aria-live="polite">
+  <div class="skeleton-spinner"></div>
+  <p class="skeleton-text" id="skeletonText">Loading…</p>
+</div>
+
+<!-- ======= TOAST ======= -->
+<div class="toast" id="toast" role="alert" aria-live="assertive">
+  <div class="toast-icon">
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<!-- ======= RECORD DETAIL MODAL ======= -->
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitleEl">
+  <div class="modal" id="modalEl">
+    <div class="modal-accent"></div>
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modalTitleEl"></div>
+        <div class="modal-subtitle" id="modalSubtitle"></div>
+      </div>
+      <button class="modal-close" id="modalCloseBtn" aria-label="Close dialog">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ======= LEAVE REQUEST MODAL (Lecturer) ======= -->
+<div class="modal-backdrop" id="leaveModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="leaveModalTitle">
+  <div class="modal" id="leaveModalEl" style="max-width:520px;">
+    <div class="modal-accent" style="background:var(--warning)"></div>
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="leaveModalTitle">Request Leave / Report Delay</div>
+        <div class="modal-subtitle">Submit your leave or delay report for today</div>
+      </div>
+      <button class="modal-close" id="leaveModalClose" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="leaveForm" novalidate>
+        <div class="login-field">
+          <label>Request Type</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <label class="leave-type-btn"><input type="radio" name="leaveType" value="Late" checked> <span>🕐 Late Arrival</span></label>
+            <label class="leave-type-btn"><input type="radio" name="leaveType" value="Absent"> <span>❌ Absent</span></label>
+            <label class="leave-type-btn"><input type="radio" name="leaveType" value="Online"> <span>💻 Online Class</span></label>
+            <label class="leave-type-btn"><input type="radio" name="leaveType" value="Reschedule"> <span>📅 Reschedule</span></label>
+          </div>
+        </div>
+        <div class="login-field">
+          <label for="leaveClass">Affected Class</label>
+          <select id="leaveClass" class="login-input" style="padding-left:14px;">
+            <option value="">Select class...</option>
+          </select>
+        </div>
+        <div class="login-field">
+          <label for="leaveDate">Date</label>
+          <input type="date" id="leaveDate" class="login-input" style="padding-left:14px;">
+        </div>
+        <div class="login-field" id="rescheduleFields" style="display:none;">
+          <label>Reschedule To</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div><label for="newDate" style="font-size:12px;color:var(--text-muted);">New Date</label><input type="date" id="newDate" class="login-input" style="padding-left:14px;margin-top:4px;"></div>
+            <div><label for="newTime" style="font-size:12px;color:var(--text-muted);">New Time</label><input type="time" id="newTime" class="login-input" style="padding-left:14px;margin-top:4px;"></div>
+          </div>
+          <div style="margin-top:8px;"><label for="newRoom" style="font-size:12px;color:var(--text-muted);">New Room</label><input type="text" id="newRoom" class="login-input" placeholder="e.g. Block B-101" style="padding-left:14px;margin-top:4px;"></div>
+        </div>
+        <div class="login-field">
+          <label for="leaveReason">Reason</label>
+          <textarea id="leaveReason" class="login-input" rows="3" placeholder="Provide a brief explanation..." style="padding-left:14px;resize:vertical;"></textarea>
+        </div>
+        <div class="login-field">
+          <label for="leaveProof">Proof Document (optional)</label>
+          <input type="file" id="leaveProof" accept="image/*,.pdf" class="login-input" style="padding-left:14px;">
+          <span style="font-size:12px;color:var(--text-muted);">Image or PDF. Will be stored locally.</span>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">
+          <button type="button" class="export-btn" id="leaveModalCancelBtn">Cancel</button>
+          <button type="submit" class="login-btn" style="width:auto;padding:10px 24px;">Submit Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ======= CHECK-IN VALIDATION MODAL (Lecturer) ======= -->
+<div class="modal-backdrop" id="checkinValidateBackdrop" role="dialog" aria-modal="true" aria-labelledby="checkinValidateTitle">
+  <div class="modal" id="checkinValidateEl" style="max-width:440px;">
+    <div class="modal-accent"></div>
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="checkinValidateTitle">Validate Check-In</div>
+        <div class="modal-subtitle" id="checkinValidateSub">Enter the QR code or confirm your location</div>
+      </div>
+      <button class="modal-close" id="checkinValidateClose" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="checkinValidateBody"></div>
+  </div>
+</div>
+
+<!-- ======= NOTIFICATION PANEL ======= -->
+<div class="notif-panel-backdrop" id="notifPanelBackdrop" aria-hidden="true"></div>
+<aside class="notif-panel" id="notifPanel" role="complementary" aria-label="Notifications">
+  <div class="notif-panel-header">
+    <h3>Notifications</h3>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button class="link-btn" id="markAllReadBtn" style="font-size:12px;">Mark all read</button>
+      <button class="modal-close" id="notifPanelClose" aria-label="Close notifications">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="notif-panel-body" id="notifPanelBody"></div>
+</aside>
+
+
+<!-- ======= LECTURER VIEW ======= -->
+<div id="lecturerView" class="view">
+<div class="lecturer-wrap">
+  <nav class="topnav" aria-label="Lecturer navigation">
+    <a class="nav-logo" href="#" aria-label="UniAttend Home">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 2L14 5V11L8 14L2 11V5L8 2Z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 2V14" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M2 5L14 11" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".5"/><path d="M14 5L2 11" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".5"/></svg>
+      </div>
+      ORBYTE
+    </a>
+    <div class="nav-links">
+      <button class="nav-link active" data-tab="attendance">Attendance</button>
+      <button class="nav-link" data-tab="history">History</button>
+      <button class="nav-link" data-tab="profile">Profile</button>
+    </div>
+    <div class="nav-user-wrap">
+      <div class="nav-user-info">
+        <div class="nav-user-name" id="lecNavName">Ahmad Hafiz</div>
+        <div class="nav-user-role">Lecturer</div>
+      </div>
+      <div class="nav-avatar" id="lecNavAvatar" aria-hidden="true">AH</div>
+      <button class="logout-btn" id="lecLogoutBtn" aria-label="Logout from lecturer account">
+        <svg viewBox="0 0 14 14" fill="none"><path d="M9.5 7H3M6 4.5L3 7l3 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 2h3.5A1.5 1.5 0 0112 3.5v7A1.5 1.5 0 0110.5 12H7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Logout
+      </button>
+    </div>
+  </nav>
+
+  <main class="lec-main">
+    <!-- Attendance Tab -->
+    <div class="lec-page active" id="tab-attendance">
+      <div class="page-header">
+        <h1>Good morning, <span id="lecGreetName">Ahmad</span> 👋 <span class="live-clock" id="liveClock"></span></h1>
+        <p id="todayDateStr">Loading date…</p>
+      </div>
+      <div class="daily-summary">
+        <div class="ds-card"><div class="ds-icon ic-classes"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 2v2M5 2v2M2 7h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="ds-val" id="lecDailyClasses">3</div><div class="ds-lbl">Classes Today</div></div></div>
+        <div class="ds-card"><div class="ds-icon ic-hours"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M8 5v3l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="ds-val" id="lecWorkedHours">—</div><div class="ds-lbl">Hours Worked</div></div></div>
+        <div class="ds-card"><div class="ds-icon ic-rate"><svg viewBox="0 0 16 16" fill="none"><path d="M2 11l4-4 3 2 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="ds-val" id="lecAttendRate">—</div><div class="ds-lbl">Attendance Rate</div></div></div>
+      </div>
+
+      <!-- Pending leave request banner -->
+      <div id="pendingLeaveAlert" class="leave-alert" style="display:none;"></div>
+
+      <div class="status-card" id="statusCard">
+        <div class="status-row">
+          <div class="status-info">
+            <h2>Current status</h2>
+            <div class="status-badge out" id="statusBadge">
+              <span class="status-dot" id="statusDot"></span>
+              <span id="statusText">Checked Out</span>
+            </div>
+            <p class="status-meta" id="lastAction">Last action: Yesterday at 5:02 PM</p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="checkin-btn primary" id="checkInBtn" aria-label="Check in">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v6l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5"/></svg>
+              Check In
+            </button>
+            <button class="checkin-btn checkout" id="checkOutBtn" disabled aria-label="Check out">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 9h6M9 6l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5"/></svg>
+              Check Out
+            </button>
+          </div>
+        </div>
+        <div class="details-row">
+          <div class="detail-item"><label>Department</label><span id="lecDeptLabel">Civil Engineering</span></div>
+          <div class="detail-item"><label>Staff ID</label><span class="mono" id="lecIdLabel">CE-2041</span></div>
+          <div class="detail-item"><label>Location</label><span>Building A, Floor 3</span></div>
+          <div class="detail-item"><label>Today's Schedule</label><span>08:00 – 17:00</span></div>
+          <div class="detail-item"><label>Check In</label><span class="mono" id="detailCheckIn">—</span></div>
+          <div class="detail-item"><label>Check Out</label><span class="mono" id="detailCheckOut">—</span></div>
+        </div>
+      </div>
+
+      <!-- GPS Auto Check-In Panel -->
+      <div class="gps-panel" id="gpsPanelCard">
+        <div class="gps-panel-header">
+          <div class="gps-panel-title">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="8" r="1" fill="currentColor"/></svg>
+            GPS Auto Check-In
+          </div>
+          <span id="gpsPanelDist" class="gps-dist-badge" style="display:none;"></span>
+        </div>
+        <div class="gps-panel-body">
+          <div id="gpsPanelStatus" class="gps-status-line">
+            <span class="gps-status-dot"></span>
+            <span style="color:var(--text-muted);font-size:13px;">Press the button to verify your campus location</span>
+          </div>
+          <button class="gps-checkin-btn" id="gpsAutoCheckinBtn" onclick="gpsAutoCheckin()">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="8" r="1" fill="currentColor"/></svg>
+            &#x1F4CD; Auto Check-In via GPS
+          </button>
+          <div style="width:100%; height:1px; background:var(--border); margin: 8px 0;"></div>
+          <div style="width:100%; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <p style="font-size:14px; font-weight:600; color:var(--text);">Background Auto Check-In</p>
+              <span style="font-size:12px; color:var(--text-muted);">Checks location every 15 mins (Active: 06:00 - 20:00)</span>
+            </div>
+            <button class="toggle" id="lecturerAutoTrackingToggle" aria-label="Toggle background auto tracking" aria-pressed="false"></button>
+          </div>
+        </div>
+        <div class="gps-panel-footer">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.1"/><path d="M6 4v2.5M6 8v.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Must be within <strong id="gpsPanelRadius">75m</strong> of campus &middot; Anti-spoofing enabled
+        </div>
+      </div>
+
+      <!-- Today's Schedule -->
+      <div class="section-card" style="margin-top:16px;">
+        <div class="section-header"><h3>Today's Teaching Schedule</h3><span id="lecTodayScheduleCount" style="font-size:13px;color:var(--text-muted);">Loading...</span></div>
+        <div id="lecTodaySchedule" style="padding:16px 24px 24px;"></div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <h3>Recent Attendance</h3>
+          <button class="link-btn" id="viewAllBtn">View all →</button>
+        </div>
+        <table><thead><tr><th>Date</th><th>Day</th><th>Check In</th><th>Check Out</th><th>Duration</th><th>Status</th></tr></thead><tbody id="quickHistoryBody"></tbody></table>
+      </div>
+    </div>
+
+    <!-- History Tab -->
+    <div class="lec-page" id="tab-history">
+      <div class="page-header"><h1>Attendance History</h1><p>Your full attendance record</p></div>
+      <div class="section-card">
+        <div class="section-header"><h3>All Records</h3><span id="historyRecordCount" style="font-size:13px;color:var(--text-muted);">0 records</span></div>
+        <table><thead><tr><th>Date</th><th>Day</th><th>Check In</th><th>Check Out</th><th>Duration</th><th>Status</th></tr></thead><tbody id="fullHistoryBody"></tbody></table>
+        <div class="empty-state" id="historyEmpty"><div class="empty-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><h4>No records found</h4><p>Your attendance history will appear here.</p></div>
+      </div>
+    </div>
+
+    <!-- Leave Requests Tab -->
+    <div class="lec-page" id="tab-leave">
+      <div class="page-header">
+        <h1>Leave Requests</h1>
+        <p>Track the status of your submitted leave and delay reports</p>
+      </div>
+      <div style="margin-bottom:16px;">
+        <button class="checkin-btn primary" id="newLeaveBtn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          New Request
+        </button>
+      </div>
+      <div class="section-card">
+        <div class="section-header"><h3>My Leave Requests</h3><span id="leaveRequestCount" style="font-size:13px;color:var(--text-muted);">0 requests</span></div>
+        <div id="myLeaveRequests" style="padding:16px 24px 24px;"></div>
+      </div>
+    </div>
+
+    <!-- Profile Tab -->
+    <div class="lec-page" id="tab-profile">
+      <div class="page-header"><h1>My Profile</h1><p>Your personal and employment information</p></div>
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="profile-avatar" id="profileAvatarEl">AH</div>
+          <div>
+            <div class="profile-name" id="profileNameEl">Ahmad Hafiz bin Abdullah</div>
+            <div class="profile-title" id="profileTitleEl">Senior Lecturer · Civil Engineering</div>
+            <div class="profile-badge"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Active</div>
+          </div>
+        </div>
+        <div class="profile-grid">
+          <div class="profile-field"><label>Staff ID</label><span class="mono" id="pfStaffId">CE-2041</span></div>
+          <div class="profile-field"><label>Email</label><span id="pfEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a9c8c1c4c8cd87c1c8cfc0d3e9dcc7c0dfccdbdac0ddd087cccddc87c4d0">[email&#160;protected]</a></span></div>
+          <div class="profile-field"><label>Department</label><span id="pfDept">Civil Engineering</span></div>
+          <div class="profile-field"><label>Faculty</label><span>Faculty of Engineering</span></div>
+          <div class="profile-field"><label>Phone</label><span>+60 12-345 6789</span></div>
+          <div class="profile-field"><label>Office</label><span>Building A, Room 312</span></div>
+          <div class="profile-field"><label>Employment Type</label><span>Full-time Permanent</span></div>
+          <div class="profile-field"><label>Joined</label><span>March 2018</span></div>
+        </div>
+        <div class="profile-stats">
+          <div class="stat-box"><div class="val" id="profilePresent">0</div><div class="lbl">Days Present</div></div>
+          <div class="stat-box"><div class="val" id="profileLate" style="color:var(--warning)">0</div><div class="lbl">Late Arrivals</div></div>
+          <div class="stat-box"><div class="val" id="profileAbsent" style="color:var(--danger)">0</div><div class="lbl">Absent</div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</div>
+
+<!-- ======= ADMIN VIEW ======= -->
+<div id="adminView" class="view">
+<div class="admin-wrap">
+  <aside class="sidebar" role="navigation" aria-label="Admin navigation">
+    <div class="sidebar-logo">
+      <div class="nav-logo-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 2L14 5V11L8 14L2 11V5L8 2Z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 2V14" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      ORBYTE
+    </div>
+    <div class="sidebar-section">Main</div>
+    <button class="sidebar-item active" data-section="dashboard"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/></svg>Dashboard</button>
+    <button class="sidebar-item" data-section="records"><svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Attendance Records</button>
+    <button class="sidebar-item" data-section="lecturers"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 13c0-2.21 2.686-4 6-4s6 1.79 6 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Lecturers<span class="sidebar-badge" id="adminLecturerBadge">3</span></button>
+    <div class="sidebar-section">Reports</div>
+    <button class="sidebar-item" data-section="export"><svg viewBox="0 0 16 16" fill="none"><path d="M4 2h5l3 3v9H4V2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M9 2v3h3" stroke="currentColor" stroke-width="1.3"/><path d="M6 8h4M6 11h2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Export / Reports</button>
+    <button class="sidebar-item" data-section="settings"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Settings</button>
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="adminSidebarAvatar">A</div>
+      <div class="sidebar-user-info"><p id="adminSidebarName">Admin</p><span>Administrator</span></div>
+    </div>
+    <button class="sidebar-logout" id="adminLogoutBtn" aria-label="Logout from admin account">
+      <svg viewBox="0 0 14 14" fill="none"><path d="M9.5 7H3M6 4.5L3 7l3 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 2h3.5A1.5 1.5 0 0112 3.5v7A1.5 1.5 0 0110.5 12H7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Logout
+    </button>
+  </aside>
+
+  <main class="admin-main">
+    <!-- Dashboard -->
+    <div class="admin-section active" id="section-dashboard">
+      <div class="admin-quick-stats">
+        <div class="aqs-card"><div class="aqs-icon aqsi-total"><svg viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M1 13c0-2.21 2.239-4 5-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="11.5" cy="6" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M9 13c0-1.66 1.12-3 2.5-3S14 11.34 14 13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="aqs-val" id="aqsTotal">—</div><div class="aqs-lbl">Total Lecturers</div><div class="aqs-sub">All departments</div></div></div>
+        <div class="aqs-card"><div class="aqs-icon aqsi-active"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 8.5l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="aqs-val" id="aqsActive" style="color:var(--success)">—</div><div class="aqs-lbl">Active Today</div><div class="aqs-sub">Present + Late</div></div></div>
+        <div class="aqs-card"><div class="aqs-icon aqsi-inactive"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div><div><div class="aqs-val" id="aqsInactive" style="color:var(--danger)">—</div><div class="aqs-lbl">Absent Today</div><div class="aqs-sub">No check-in</div></div></div>
+
+      </div>
+      <div class="admin-header">
+        <div><h1>Attendance Overview</h1><p id="adminDateStr">Loading…</p></div>
+        <div class="flex gap-8">
+          <button class="export-btn" id="exportCsvDash"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 9V2M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Export CSV</button>
+          <button class="export-btn primary-btn" id="exportExcelDash"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 9V2M4 6l3 3 3-3" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg>Export Excel</button>
+        </div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card k-present"><div class="kpi-label">Present today</div><div class="kpi-value" id="kpiPresent">—</div><div class="kpi-sub">On time arrivals</div></div>
+        <div class="kpi-card k-late"><div class="kpi-label">Late arrivals</div><div class="kpi-value" id="kpiLate">—</div><div class="kpi-sub" id="kpiLateThreshold">After 08:30 AM</div></div>
+        <div class="kpi-card k-absent"><div class="kpi-label">Absent</div><div class="kpi-value" id="kpiAbsent">—</div><div class="kpi-sub">No check-in recorded</div></div>
+        <div class="kpi-card k-total"><div class="kpi-label">Total lecturers</div><div class="kpi-value" id="kpiTotal">—</div><div class="kpi-sub">Across all departments</div></div>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-card"><h3>Attendance by Department</h3><div class="bar-chart" id="deptBarChart"></div></div>
+        <div class="dash-card"><h3>Status Distribution</h3><div class="donut-wrap"><svg id="donutSvg" width="120" height="120" viewBox="0 0 120 120"></svg><div class="donut-legend" id="donutLegend"></div></div></div>
+      </div>
+      <div class="table-card" style="margin-top:16px;">
+        <div class="section-header"><h3>Recent Activity</h3><span style="font-size:13px;color:var(--text-muted);">Today's check-ins</span></div>
+        <div class="activity-feed" id="adminActivityFeed"></div>
+      </div>
+    </div>
+
+    <!-- Records -->
+    <div class="admin-section" id="section-records">
+      <div class="admin-header">
+        <div><h1>Attendance Records</h1><p>Filter, sort, and view all lecturer attendance data</p></div>
+        <button class="export-btn" id="exportCsvRecords"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 9V2M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Export CSV</button>
+      </div>
+      <div class="filters-bar">
+        <div class="filter-group"><label for="filterDateFrom">Date from</label><input type="date" class="filter-input" id="filterDateFrom"></div>
+        <div class="filter-group"><label for="filterDateTo">Date to</label><input type="date" class="filter-input" id="filterDateTo"></div>
+        <div class="filter-group"><label for="filterDept">Department</label>
+          <select class="filter-input status-select" id="filterDept">
+            <option value="">All departments</option>
+            <option>Civil Engineering</option><option>Computer Science</option><option>Architecture</option><option>Mechanical Engineering</option>
+          </select>
+        </div>
+        <div class="filter-group"><label for="filterStatus">Status</label>
+          <select class="filter-input status-select" id="filterStatus">
+            <option value="">All statuses</option>
+            <option>Present</option><option>Late</option><option>Absent</option><option>Leave</option><option>Online</option><option>Reschedule</option>
+          </select>
+        </div>
+        <div class="filter-group filter-search" style="flex:1"><label for="filterSearch">Search lecturer</label>
+          <div style="position:relative;"><svg viewBox="0 0 15 15" fill="none" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text-faint);pointer-events:none;"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <input type="text" class="filter-input" id="filterSearch" placeholder="Name or Staff ID…" style="padding-left:34px;width:100%;"></div>
+        </div>
+      </div>
+      <div class="kpi-grid" style="margin-bottom:16px">
+        <div class="kpi-card k-present"><div class="kpi-label">Present</div><div class="kpi-value" id="fKpiPresent">—</div><div class="kpi-sub">In filtered results</div></div>
+        <div class="kpi-card k-late"><div class="kpi-label">Late</div><div class="kpi-value" id="fKpiLate">—</div><div class="kpi-sub">In filtered results</div></div>
+        <div class="kpi-card k-absent"><div class="kpi-label">Absent</div><div class="kpi-value" id="fKpiAbsent">—</div><div class="kpi-sub">In filtered results</div></div>
+        <div class="kpi-card k-total"><div class="kpi-label">Filtered</div><div class="kpi-value" id="fKpiTotal">—</div><div class="kpi-sub">Total matching</div></div>
+      </div>
+      <div class="table-card">
+        <div class="section-header"><h3>Records</h3><div class="table-actions"><span id="recordCount" style="font-size:13px;color:var(--text-muted);">Loading…</span></div></div>
+        <table><thead><tr>
+          <th class="sortable" data-col="name">Lecturer <span class="sort-indicator"></span></th>
+          <th>Staff ID</th><th>Department</th><th>Date</th>
+          <th class="sortable" data-col="checkin">Check In <span class="sort-indicator"></span></th>
+          <th>Check Out</th><th>Duration</th>
+          <th class="sortable" data-col="status">Status <span class="sort-indicator"></span></th>
+        </tr></thead><tbody id="adminTableBody"></tbody></table>
+        <div class="empty-state" id="adminEmpty"><div class="empty-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><h4>No records match your filters</h4><p>Try adjusting the date range, department, status, or search query.</p></div>
+        <div class="pagination"><span class="pagination-info" id="paginationInfo">Showing 0 records</span><div class="pagination-controls" id="paginationControls"></div></div>
+      </div>
+    </div>
+
+    <!-- Lecturers -->
+    <div class="admin-section" id="section-lecturers">
+      <div class="admin-header"><div><h1>Lecturers</h1><p>All registered lecturers across departments</p></div></div>
+      <div class="lecturer-grid" id="lecturerGrid"></div>
+    </div>
+
+    <!-- Export -->
+    <div class="admin-section" id="section-export">
+      <div class="admin-header"><div><h1>Export &amp; Reports</h1><p>Download attendance data in various formats</p></div></div>
+
+      <!-- IMPORT SECTION -->
+      <div class="table-card" style="margin-bottom:20px;">
+        <div class="section-header"><h3>Import Attendance Data</h3><span style="font-size:13px;color:var(--text-muted);">Upload Excel file to import records</span></div>
+        <div style="padding:20px 24px;">
+          <!-- Step 1: Template -->
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 16px;background:var(--blue-light);border:1px solid var(--blue-mid);border-radius:var(--radius-sm);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="color:var(--blue);flex-shrink:0;"><path d="M4 2h8l4 4v12H4V2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 2v4h4" stroke="currentColor" stroke-width="1.4"/><path d="M7 9h6M7 12h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--blue);">Step 1 — Download Template</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Gunakan template ini agar format Excel sesuai dengan sistem.</div>
+            </div>
+            <button class="export-btn" id="downloadTemplateBtn" style="flex-shrink:0;">
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 9V2M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              Download Template
+            </button>
+          </div>
+
+          <!-- Step 2: Upload -->
+          <div style="margin-bottom:16px;">
+            <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px;">Step 2 — Upload File Excel</div>
+            <label id="importDropZone" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:32px 20px;border:2px dashed var(--border-strong);border-radius:var(--radius);cursor:pointer;transition:all .2s;background:var(--bg);">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="color:var(--text-faint);"><path d="M16 20V8M10 14l6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 24h20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <div style="text-align:center;">
+                <div style="font-size:14px;font-weight:500;color:var(--text);">Klik untuk pilih file atau drag & drop</div>
+                <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Format: .xlsx atau .xls</div>
+              </div>
+              <input type="file" id="importFileInput" accept=".xlsx,.xls" style="display:none;">
+            </label>
+          </div>
+
+          <!-- Preview Table -->
+          <div id="importPreviewWrap" style="display:none;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+              <div style="font-size:13px;font-weight:600;color:var(--text);">Step 3 — Preview Data</div>
+              <span id="importPreviewCount" style="font-size:13px;color:var(--text-muted);"></span>
+            </div>
+            <div id="importErrorBanner" style="display:none;padding:10px 14px;background:var(--danger-bg);border:1px solid var(--danger-border);border-radius:var(--radius-sm);margin-bottom:10px;font-size:13px;color:var(--danger);"></div>
+            <div style="overflow-x:auto;max-height:280px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--radius-sm);">
+              <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                <thead id="importPreviewHead" style="position:sticky;top:0;background:var(--bg);"></thead>
+                <tbody id="importPreviewBody"></tbody>
+              </table>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:14px;justify-content:flex-end;">
+              <button class="export-btn" id="importCancelBtn">Batal</button>
+              <button class="export-btn primary-btn" id="importConfirmBtn">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Konfirmasi Import
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="settings-grid" style="margin-bottom:16px;">
+        <div class="settings-card">
+          <h3>Filter Options</h3>
+          <div class="settings-field"><label>Date From</label><input type="date" class="settings-input" id="exportDateFrom"></div>
+          <div class="settings-field"><label>Date To</label><input type="date" class="settings-input" id="exportDateTo"></div>
+          <div class="settings-field"><label>Department</label>
+            <select class="settings-input" id="exportDept">
+              <option value="">All Departments</option>
+              <option>Civil Engineering</option><option>Computer Science</option><option>Architecture</option><option>Mechanical Engineering</option>
+            </select>
+          </div>
+          <div class="settings-field"><label>Status</label>
+            <select class="settings-input" id="exportStatus">
+              <option value="">All Statuses</option>
+              <option>Present</option><option>Late</option><option>Absent</option><option>Leave</option><option>Online</option><option>Reschedule</option>
+            </select>
+          </div>
+        </div>
+        <div class="dash-card"><h3>Report Summary</h3><div class="bar-chart" id="exportBarChart"></div></div>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-card">
+          <h3>CSV Export</h3>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Download filtered records as CSV, compatible with Excel and Google Sheets.</p>
+          <button class="export-btn" id="exportCsvAll" style="margin-bottom:10px;width:100%;justify-content:center;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 9V2M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Download CSV</button>
+        </div>
+        <div class="dash-card">
+          <h3>Excel Export</h3>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Download as native .xlsx file with formatted columns using SheetJS.</p>
+          <button class="export-btn primary-btn" id="exportExcelAll" style="width:100%;justify-content:center;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 9V2M4 6l3 3 3-3" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg>Download Excel (.xlsx)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="admin-section" id="section-settings">
+      <div class="admin-header"><div><h1>Settings</h1><p>System configuration and preferences</p></div></div>
+      <div class="settings-grid">
+        <div class="settings-card">
+          <h3>Attendance Rules</h3>
+          <div class="settings-field"><label>Late Threshold (minutes after class start)</label><input type="number" class="settings-input" id="settingLateThreshold" value="15" min="1" max="60"></div>
+          <div class="settings-field"><label>Absent Threshold (minutes — no check-in)</label><input type="number" class="settings-input" id="settingAbsentThreshold" value="30" min="15" max="120"></div>
+          <div class="settings-field"><label>Work Start Time</label><input type="time" class="settings-input" id="settingWorkStart" value="08:00"></div>
+          <div class="settings-field"><label>Work End Time</label><input type="time" class="settings-input" id="settingWorkEnd" value="17:00"></div>
+          <button class="save-btn" id="saveSettingsBtn">Save Changes</button>
+        </div>
+        <div class="settings-card">
+          <h3>Check-In Validation Mode</h3>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Control how lecturers validate their check-in.</p>
+          <div class="settings-field">
+            <label>Validation Mode</label>
+            <select class="settings-input" id="settingValidationMode">
+              <option value="none">None (Open Check-In)</option>
+              <option value="qr">QR Code Validation</option>
+              <option value="gps">GPS Location Validation</option>
+            </select>
+          </div>
+          <div id="qrSettings" style="display:none;">
+            <div class="settings-field"><label>QR Code for Main Campus</label><input type="text" class="settings-input" id="settingQrCode" value="ORBYTE-CAMPUS-2025" placeholder="QR code string"></div>
+            <div class="settings-field"><label>Generated QR Code</label><div id="adminQrDisplay" style="font-family:monospace;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:13px;word-break:break-all;">ORBYTE-CAMPUS-2025</div></div>
+          </div>
+          <div id="gpsSettings" style="display:none;">
+            <div class="settings-field"><label>Campus Latitude</label><input type="text" class="settings-input" id="settingLat" value="-6.285" placeholder="e.g. -6.285"></div>
+            <div class="settings-field"><label>Campus Longitude</label><input type="text" class="settings-input" id="settingLng" value="107.1706" placeholder="e.g. 107.1706"></div>
+            <div class="settings-field"><label>Allowed Radius (meters)</label><input type="number" class="settings-input" id="settingRadius" value="75" min="10" max="2000"></div>
+            <div class="settings-field"><label>Max GPS Accuracy Allowed (meters)</label><input type="number" class="settings-input" id="settingMaxAccuracy" value="150" min="20" max="500" placeholder="150"><span style="font-size:12px;color:var(--text-muted);margin-top:4px;display:block;">Rejects check-in if GPS accuracy is worse than this value (anti-spoof).</span></div>
+            <div class="settings-field"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;"><input type="checkbox" id="settingAutoCheckout" checked style="width:15px;height:15px;accent-color:var(--blue);"><span>Auto check-out when leaving campus radius</span></label></div>
+          </div>
+          <button class="save-btn" id="saveValidationBtn">Save Validation Settings</button>
+        </div>
+        <div class="settings-card">
+          <h3>Notifications</h3>
+          <div class="toggle-row"><div class="toggle-info"><p>Late Arrival Alerts</p><span>Notify when lecturer checks in late</span></div><button class="toggle on" id="toggleLateAlert" aria-label="Toggle late arrival alerts" aria-pressed="true"></button></div>
+          <div class="toggle-row"><div class="toggle-info"><p>Absence Alerts</p><span>Notify when no check-in by threshold</span></div><button class="toggle on" id="toggleAbsenceAlert" aria-label="Toggle absence alerts" aria-pressed="true"></button></div>
+          <div class="toggle-row"><div class="toggle-info"><p>Leave Request Notifications</p><span>Notify students when leave is submitted</span></div><button class="toggle on" id="toggleLeaveAlert" aria-label="Toggle leave alerts" aria-pressed="true"></button></div>
+          <div class="toggle-row"><div class="toggle-info"><p>Weekend Tracking</p><span>Track attendance on weekends</span></div><button class="toggle" id="toggleWeekend" aria-label="Toggle weekend tracking" aria-pressed="false"></button></div>
+        </div>
+        <div class="settings-card">
+          <h3>Data Management</h3>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Manage your attendance data and system records.</p>
+          <button class="export-btn" style="width:100%;justify-content:center;margin-bottom:10px;" id="clearDataBtn">Clear All localStorage Data</button>
+          <button class="export-btn" style="width:100%;justify-content:center;" id="rebuildDataBtn">Rebuild Demo Dataset</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</div>
+
+<!-- ======= STUDENT VIEW ======= -->
+<div id="studentView" class="view">
+<div class="student-wrap">
+  <nav class="student-topnav topnav" aria-label="Student navigation">
+    <a class="nav-logo" href="#" aria-label="UniAttend Home">
+      <div class="nav-logo-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 2L14 5V11L8 14L2 11V5L8 2Z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 2V14" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M2 5L14 11" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".5"/></svg></div>
+      ORBYTE
+    </a>
+    <div class="nav-links">
+      <button class="nav-link active" data-stutab="dashboard">Dashboard</button>
+      <button class="nav-link" data-stutab="schedule">Schedule</button>
+      <button class="nav-link" data-stutab="profile">Profile</button>
+    </div>
+    <div class="nav-user-wrap">
+      <button class="nav-notif" id="stuNotifBtn" aria-label="Notifications" title="Notifications">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 2a5 5 0 015 5v2.5l1 1.5H2l1-1.5V7a5 5 0 015-5z" stroke="currentColor" stroke-width="1.3"/><path d="M6.5 13a1.5 1.5 0 003 0" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="nav-notif-dot" id="stuNotifDot" style="display:none;"></span>
+        <span class="nav-notif-count" id="stuNotifCount" style="display:none;"></span>
+      </button>
+      <div class="nav-user-info">
+        <div class="nav-user-name" id="stuNavName">Student</div>
+        <div class="nav-user-role">Student</div>
+      </div>
+      <div class="nav-avatar" id="stuNavAvatar" style="background:linear-gradient(135deg,#0891b2,#0369a1)">S</div>
+      <button class="logout-btn" id="stuLogoutBtn" aria-label="Logout">
+        <svg viewBox="0 0 14 14" fill="none"><path d="M9.5 7H3M6 4.5L3 7l3 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 2h3.5A1.5 1.5 0 0112 3.5v7A1.5 1.5 0 0110.5 12H7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Logout
+      </button>
+    </div>
+  </nav>
+
+  <main class="stu-main">
+    <!-- Dashboard Tab -->
+    <div class="stu-page active" id="stutab-dashboard">
+      <div class="stu-welcome">
+        <div class="stu-welcome-inner">
+          <h1>Good morning, <span id="stuGreetName">Student</span> 👋</h1>
+          <p id="stuDateStr">Loading...</p>
+          <div class="stu-welcome-stats">
+            <div class="stu-welcome-stat"><div class="sw-val" id="stuWelTotal">0</div><div class="sw-lbl">Total Classes</div></div>
+            <div class="stu-welcome-stat"><div class="sw-val" id="stuWelPresent">0</div><div class="sw-lbl">Attended</div></div>
+            <div class="stu-welcome-stat"><div class="sw-val" id="stuWelRate">0%</div><div class="sw-lbl">Attendance Rate</div></div>
+          </div>
+        </div>
+        <!-- Notifications auto-enabled on login -->
+        <div style="display:none;" id="stuNotifEnableWrap">
+          <button class="checkin-btn primary" id="enableNotifBtn" style="gap:8px;display:none;"></button>
+          <span id="notifStatusLabel" style="font-size:12px;color:rgba(255,255,255,.65);margin-left:10px;"></span>
+        </div>
+      </div>
+
+      <div class="stu-summary-grid">
+        <div class="stu-sum-card"><div class="stu-sum-icon ic-present"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="stu-sum-val" id="stuSumPresent">24</div><div class="stu-sum-lbl">Present</div></div></div>
+        <div class="stu-sum-card"><div class="stu-sum-icon ic-absent"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><div class="stu-sum-val" id="stuSumAbsent">3</div><div class="stu-sum-lbl">Absent</div></div></div>
+        <div class="stu-sum-card"><div class="stu-sum-icon ic-late"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M8 5v3.5l2 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="stu-sum-val" id="stuSumLate">2</div><div class="stu-sum-lbl">Late</div></div></div>
+        <div class="stu-sum-card"><div class="stu-sum-icon ic-rate"><svg viewBox="0 0 16 16" fill="none"><path d="M2 12l4-4 3 2 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="stu-sum-val" id="stuSumRate">83%</div><div class="stu-sum-lbl">Rate</div></div></div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <h3>Today's Schedule <span id="stuLiveIndicator" class="live-badge">● LIVE</span></h3>
+          <span id="stuTodayCount" style="font-size:13px;color:var(--text-muted);">Loading...</span>
+        </div>
+        <div id="stuTodaySchedule" style="padding:16px 24px 24px;"></div>
+      </div>
+
+      <!-- Recent notifications preview -->
+      <div class="section-card" id="stuRecentNotifsCard">
+        <div class="section-header"><h3>Recent Notifications</h3><button class="link-btn" id="viewAllNotifsBtn">View all →</button></div>
+        <div id="stuRecentNotifs" style="padding:0 24px 16px;"></div>
+      </div>
+    </div>
+
+    <!-- Schedule Tab -->
+    <div class="stu-page" id="stutab-schedule">
+      <div class="page-header"><h1>Weekly Schedule</h1><p>Your full class timetable for this semester</p></div>
+      <div class="section-card">
+        <div class="section-header"><h3>Timetable — Week View</h3><span style="font-size:13px;color:var(--text-muted);">Semester 2, 2024/2025</span></div>
+        <div class="week-table-wrap" style="padding:0 0 8px;">
+          <table class="week-table" style="width:100%;border-collapse:collapse;">
+            <thead><tr>
+              <th style="width:90px;padding:12px 16px;text-align:left;">Time</th>
+              <th style="padding:12px 8px;">Mon</th><th style="padding:12px 8px;">Tue</th><th style="padding:12px 8px;">Wed</th><th style="padding:12px 8px;">Thu</th><th style="padding:12px 8px;">Fri</th>
+            </tr></thead>
+            <tbody id="stuWeekTable"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="section-card" style="margin-top:16px;">
+        <div class="section-header"><h3>Attendance History</h3><span style="font-size:13px;color:var(--text-muted);">Last 30 days</span></div>
+        <table><thead><tr><th>Date</th><th>Subject</th><th>Lecturer</th><th>Time</th><th>Lecturer Status</th></tr></thead><tbody id="stuHistoryBody"></tbody></table>
+      </div>
+    </div>
+
+    <!-- Profile Tab -->
+    <div class="stu-page" id="stutab-profile">
+      <div class="page-header"><h1>My Profile</h1><p>Your personal and academic information</p></div>
+      <div class="stu-profile-card">
+        <div class="stu-profile-header">
+          <div class="stu-avatar-wrap">
+            <div class="stu-avatar" id="stuProfileAvatar">S</div>
+            <div class="stu-avatar-edit" title="Change photo"><svg viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2L4 10l-2.5.5.5-2.5L8.5 1.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div>
+            <div class="stu-profile-name" id="stuProfileName">Aiman Danial</div>
+            <div class="stu-profile-sub" id="stuProfileSub">Computer Science · Year 2</div>
+            <div class="stu-profile-tags">
+              <span class="stu-tag"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1L9.5 3V7L5.5 9.5L1.5 7V3L5.5 1Z" stroke="currentColor" stroke-width="1.1"/></svg>Active Student</span>
+              <span class="stu-tag" style="background:var(--blue-light);color:var(--blue);border-color:var(--blue-mid);">Dean's List</span>
+            </div>
+          </div>
+        </div>
+        <div class="stu-profile-grid">
+          <div class="stu-profile-field"><label>Student ID</label><span class="mono" id="stuProfileId">STU-0001</span></div>
+          <div class="stu-profile-field"><label>Email</label><span id="stuProfileEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ed8c84808c83c3898c83848c81ad9e999889888399c3888998c38094">[email&#160;protected]</a></span></div>
+          <div class="stu-profile-field"><label>Programme</label><span>Bachelor of Computer Science</span></div>
+          <div class="stu-profile-field"><label>Faculty</label><span>Faculty of Computing</span></div>
+          <div class="stu-profile-field"><label>Semester</label><span>Semester 2, 2024/2025</span></div>
+          <div class="stu-profile-field"><label>Class Group</label><span>CS-2B</span></div>
+          <div class="stu-profile-field"><label>Advisor</label><span>Dr. Hafizuddin Zain</span></div>
+          <div class="stu-profile-field"><label>Enrolled</label><span>September 2023</span></div>
+        </div>
+        <button class="stu-edit-btn" onclick="showToast('Edit profile coming soon', 'warning')"><svg viewBox="0 0 14 14" fill="none"><path d="M9.5 1.5l3 3L5 12H2v-3L9.5 1.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Edit Profile</button>
+      </div>
+      <div class="section-card">
+        <div class="section-header"><h3>Attendance Progress by Subject</h3></div>
+        <div style="padding:16px 24px 24px;" id="stuSubjectProgress"><!-- populated by JS --></div>
+      </div>
+    </div>
+  </main>
+</div>
+</div>
+
+<!-- SheetJS Local - no tracking/CORS issues -->
+<script src="xlsx.min.js"></script>
+<script src="script.js" defer></script>
+</body>
+</html>
